@@ -1,11 +1,16 @@
 package jp.co.sample.form;
 
+/**
+ * @author smone
+ *
+ */
 public class UpdateEmployeeForm {
 	private String id;
 	private String dependentsCount;
 	public String getId() {
 		return id;
 	}
+	
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -21,5 +26,4 @@ public class UpdateEmployeeForm {
 	}
 	
 	
-
-}
+ }
