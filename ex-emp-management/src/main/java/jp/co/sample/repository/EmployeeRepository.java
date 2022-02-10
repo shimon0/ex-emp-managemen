@@ -17,7 +17,7 @@ public class EmployeeRepository {
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 	
-	private static final RowMapper<Employee> Employee_ROW_MAPPER
+	private static final RowMapper<Employee> EMPLOYEE_ROW_MAPPER
 	=(rs,i)->{
 		Employee employee=new Employee();
 		employee.setId(rs.getInt("id"));
@@ -39,7 +39,7 @@ public class EmployeeRepository {
 		public List<Employee> findAll() {
 			String sql = "select * from employees order by hire_date desc";
 			
-			List<Employee> employeeList = template.query(sql, Employee_ROW_MAPPER);
+			List<Employee> employeeList = template.query(sql, EMPLOYEE_ROW_MAPPER);
 			return employeeList;
 		}
 	
@@ -51,17 +51,12 @@ public class EmployeeRepository {
 		 * @return 従業員1件
 		 */
 		public Employee load(Integer id) {
-			StringBuilder sql = new StringBuilder();
-			sql.append("SELECT ");
-			sql.append(
-					"id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics ");
-			sql.append("FROM employees ");
-			sql.append("WHERE id = :id;");
+			String sql = "select * from employees where id=:id";
 			SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
-			Employee employee = template.queryForObject(sql.toString(), param, Employee_ROW_MAPPER);
+			
+			Employee employee = template.queryForObject(sql, param, EMPLOYEE_ROW_MAPPER);
 			return employee;
 		}
-
 		/**
 		 * 従業員更新
 		 *
