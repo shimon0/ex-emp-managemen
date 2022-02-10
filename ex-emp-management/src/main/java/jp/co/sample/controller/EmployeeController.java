@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -50,7 +52,10 @@ public class EmployeeController {
 		return "employee/detail";
 	}
 	@RequestMapping("/update")
-	public String update(UpdateEmployeeForm form) {
+	public String update(@Validated UpdateEmployeeForm form,BindingResult result,Model model) {
+		if (result.hasErrors()) {
+			return showDetail(form.getId(), model);
+		}
 		int employeeId = Integer.parseInt(form.getId());
 		Employee employee = employeeService.showDetail(employeeId);
 		employee.setMailAddress(form.getMailAddress());
@@ -61,6 +66,6 @@ public class EmployeeController {
 		employee.setCharacteristics(form.getCharacteristics());
 		employee.setDependentsCount(Integer.parseInt(form.getDependentsCount()));
 		employeeService.update(employee);
-		return "redirect:showList";
+		return "redirect:/employee/showList";
 	}
 }
