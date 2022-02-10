@@ -22,4 +22,11 @@ public class EmployeeService {
 	public List<Employee>showList(){
 		return employeeRepository.findAll();
 	}
+	/**
+	 * @param id
+	 * @return
+	 */
+	public Employee showDetail(Integer id) {
+		return employeeRepository.load(id);
+	}
  } 
