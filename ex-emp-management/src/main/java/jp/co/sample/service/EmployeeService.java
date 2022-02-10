@@ -29,4 +29,10 @@ public class EmployeeService {
 	public Employee showDetail(Integer id) {
 		return employeeRepository.load(id);
 	}
+	/**
+	 * @param employee
+	 */
+	public void update(Employee employee) {
+		employeeRepository.update(employee);
+	}
  } 
